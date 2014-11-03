@@ -1,0 +1,12 @@
+Globally install
+    npm install -g bower
+    npm install -g gulp
+    npm install -g karma
+
+Locally install
+    npm install
+    bower install
+
+Build
+    gulp all
+
