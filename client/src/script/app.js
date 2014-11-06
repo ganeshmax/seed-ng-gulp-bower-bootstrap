@@ -1,13 +1,12 @@
 'use strict';
 
-angular.module('app')
+angular.module('ba')
+
     .config(function ($routeProvider, $locationProvider) {
 
-        $locationProvider.html5Mode(true);
-
         $routeProvider
-            .when('/first',     { controller: 'FirstCtrl', templateUrl: '/view/first.tpl.html' })
-            .when('/second',    { controller: 'SecondCtrl', templateUrl: '/view/second.tpl.html'})
-            .when('/',          { redirectTo: '/first' })
-            .otherwise(         { redirectTo: '/first' })
-    })
+            .when('/contact',   { controller: 'ContactCtrl as contactCtrl', templateUrl: '/view/contact-list.tpl.html' })
+            .when('/second',    { controller: 'SecondCtrl as ctrl', templateUrl: '/view/second.tpl.html'})
+            .when('/',          { redirectTo: '/contact' })
+            .otherwise(         { redirectTo: '/contact' })
+    });

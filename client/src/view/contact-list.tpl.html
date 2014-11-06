@@ -1,0 +1,20 @@
+
+<table id="contacts" class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="contact in contactCtrl.contacts" ng-class="contactCtrl.getAlternateRowClass($odd)">
+            <td>{{contact.name.first}} {{contact.name.last}}</td>
+            <td>{{contact.address.city}}, {{contact.address.state}}, {{contact.address.country}}</td>
+            <td>{{contact.email}}</td>
+            <td>{{contact.phone}}</td>
+        </tr>
+    </tbody>
+</table>

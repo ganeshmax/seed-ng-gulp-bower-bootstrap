@@ -12,6 +12,9 @@ module.exports = {
     allVendorScripts: [
         './bower_components/angular/angular.js',
         './bower_components/angular-route/angular-route.js'
+    ],
+    allAppViews: [
+        './client/src/view/**/*.html'
     ]
 };
 

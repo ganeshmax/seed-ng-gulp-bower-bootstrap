@@ -1,5 +1,4 @@
 'use strict';
-angular.module('ba')
-    .service('secondSvc', function () {
-        // Service code will go here
-    });
+angular.module('ba').service('SecondSvc', function () {
+    // Service code will go here
+});

@@ -60,16 +60,24 @@ gulp.task('appJs', function () {
 
 gulp.task('js', ['vendorJs', 'appJs']);
 
-gulp.task('copy', function(){
+gulp.task('copy:asset', function() {
     gulp.src(['./client/src/asset/*'])
         .pipe(gulp.dest('./dist/asset'));
+});
 
+gulp.task('copy:view', function() {
     gulp.src(['./client/src/view/*'])
         .pipe(gulp.dest('./dist/view'));
 
+});
+
+gulp.task('copy:index', function() {
     gulp.src('./client/src/index.html')
         .pipe(gulp.dest('./dist'));
+
 });
+
+gulp.task('copy', ['copy:asset', 'copy:view', 'copy:index']);
 
 gulp.task('server', function () {
     require('./server/server');
@@ -78,6 +86,7 @@ gulp.task('server', function () {
 gulp.task('watch', function () {
     gulp.watch(path.allAppScripts, ['appJs']);
     gulp.watch(path.allAppStyles, ['appCss']);
+    gulp.watch(path.allAppViews, ['copy:view']);
 });
 
 gulp.task('dist', ['css', 'js', 'copy', 'server', 'watch']);

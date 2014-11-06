@@ -1,4 +1,3 @@
-angular.module('ba')
-    .controller('SecondCtrl', function ($scope) {
-        // Controller code here
-    });
+angular.module('ba').controller('SecondCtrl', function ($scope) {
+    this.value = "Second";
+});

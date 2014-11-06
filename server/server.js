@@ -14,12 +14,12 @@ app.use(bodyParser.json());     // body-parser: not bundled with express
 var config = require('./data/config');
 var contactsJson = require('./data/contacts-01');
 
-app.get('/contact', function (request, response) {
+app.get('/api/contact', function (request, response) {
     console.log('GET /contact');
     response.send(contactsJson);
 });
 
-app.get('/contact/:id', function (request, response) {
+app.get('/api/contact/:id', function (request, response) {
     console.log('GET /contact/:id');
     var contact = null;
     for(var i = 0; i<contactsJson.length; i++) {
@@ -32,7 +32,7 @@ app.get('/contact/:id', function (request, response) {
     response.send(contact);
 });
 
-app.delete('/contact/:id', function(request, response) {
+app.delete('/api/contact/:id', function(request, response) {
     console.log('DELETE /contact/:id');
     for(var i = 0; i<contactsJson.length; i++) {
         var currentContact = contactsJson[i];
@@ -46,7 +46,7 @@ app.delete('/contact/:id', function(request, response) {
     response.send(request.params.id);
 });
 
-app.post('/contact', function (request, response) {
+app.post('/api/contact', function (request, response) {
     console.log('POST /contact');
     var contact = request.body;
     contact.id = lastId++;
@@ -54,7 +54,7 @@ app.post('/contact', function (request, response) {
     response.send(contact);
 });
 
-app.put('/contact/:id', function (request, response) {
+app.put('/api/contact/:id', function (request, response) {
     console.log('PUT /contact/:id');
 
     var incomingContact = request.body;

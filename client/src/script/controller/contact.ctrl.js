@@ -1,18 +1,3 @@
-angular.module('ba', [
-    'ngRoute'
-]);
-'use strict';
-
-angular.module('ba')
-
-    .config(function ($routeProvider, $locationProvider) {
-
-        $routeProvider
-            .when('/contact',   { controller: 'ContactCtrl as contactCtrl', templateUrl: '/view/contact-list.tpl.html' })
-            .when('/second',    { controller: 'SecondCtrl as ctrl', templateUrl: '/view/second.tpl.html'})
-            .when('/',          { redirectTo: '/contact' })
-            .otherwise(         { redirectTo: '/contact' })
-    });
 angular.module('ba').controller('ContactCtrl', function (ContactSvc) {
     var self = this;
 
@@ -91,35 +76,4 @@ angular.module('ba').controller('ContactCtrl', function (ContactSvc) {
         }
     ];
 
-});
-angular.module('ba').controller('SecondCtrl', function ($scope) {
-    this.value = "Second";
-});
-angular.module('ba').directive('baFirst', function () {
-    return {
-        // Directive definition will go here
-    }
-});
-angular.module('ba').directive('baSecond', function () {
-    return {
-        // Directive definition will go here
-    }
-});
-angular.module('ba').filter('baFirst', function () {
-    // Filter code will go here
-});
-angular.module('ba').filter('baSecond', function () {
-    // Filter code will go here
-});
-'use strict';
-angular.module('ba').factory('ContactSvc', function ($http) {
-    return {
-        getAll: function() {
-            return $http.get('/api/contact');
-        }
-    }
-});
-'use strict';
-angular.module('ba').service('SecondSvc', function () {
-    // Service code will go here
 });
