@@ -20,15 +20,16 @@ app.get('/api/contact', function (request, response) {
 });
 
 app.get('/api/contact/:id', function (request, response) {
-    console.log('GET /contact/:id');
+    console.log('GET /contact/:id' + request.params.id);
     var contact = null;
     for(var i = 0; i<contactsJson.length; i++) {
         var currentContact = contactsJson[i];
-        if (currentContact.id === request.params.id) {
+        if (currentContact.id == request.params.id) {
             contact = currentContact;
             break;
         }
     }
+    console.log("Contact: " + contact);
     response.send(contact);
 });
 

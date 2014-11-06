@@ -8,12 +8,33 @@ angular.module('ba')
     .config(function ($routeProvider, $locationProvider) {
 
         $routeProvider
-            .when('/contact',   { controller: 'ContactCtrl as contactCtrl', templateUrl: '/view/contact-list.tpl.html' })
-            .when('/second',    { controller: 'SecondCtrl as ctrl', templateUrl: '/view/second.tpl.html'})
+            .when('/contact',           { controller: 'ContactListCtrl as ctrl', templateUrl: '/view/contact-list.tpl.html' })
+            .when('/contact/:id',       { controller: 'ContactDetailCtrl as ctrl', templateUrl: '/view/contact-detail.tpl.html'})
+
             .when('/',          { redirectTo: '/contact' })
             .otherwise(         { redirectTo: '/contact' })
     });
-angular.module('ba').controller('ContactCtrl', function (ContactSvc) {
+angular.module('ba').controller('ContactDetailCtrl', function ($routeParams, ContactSvc) {
+    var self = this;
+
+    self.contact = {};
+
+    self.getContact = function(id) {
+        ContactSvc.get(id).then(
+            function(response) {
+                console.log("Success: " + response.data);
+                self.contact = response.data;
+            },
+            function(error) {
+                console.log("Error: " + error)
+            }
+        )
+    };
+
+    self.getContact($routeParams.id);
+
+});
+angular.module('ba').controller('ContactListCtrl', function (ContactSvc, $location) {
     var self = this;
 
     self.getAlternateRowClass = function(isOdd) {
@@ -24,76 +45,23 @@ angular.module('ba').controller('ContactCtrl', function (ContactSvc) {
 
     self.getAllContacts = function() {
         ContactSvc.getAll().then(
-            function(successResponse) {
-                console.log("Success Response" + successResponse.data);
-                self.contacts = successResponse.data;
+            function(response) {
+                console.log("Success: " + response.data);
+                self.contacts = response.data;
             },
-            function(errorResponse) {
-                console.log("Error: " + errorResponse)
+            function(error) {
+                console.log("Error: " + error)
             }
         )
     };
 
+    self.showContact = function(id) {
+        console.log("Moving to: " + '/contact/' + id);
+        $location.path('/contact/' + id);
+    };
+
     self.getAllContacts();
 
-    self.contacts = [
-        {
-            id: 1,
-            name: {
-                first: "Ganeshji",
-                last: "Marwaha"
-            },
-            address: {
-                line1: "GM Line 1",
-                line2: "GM Line 2",
-                city: "GM City",
-                state: "GM State",
-                code: "GM Code",
-                country: "GM Country"
-            },
-            email: "ganeshji.marwaha@email.com",
-            phone: "99999 11111"
-        },
-        {
-            id: 2,
-            name: {
-                first: "Ubahariya",
-                last: "Natarajan"
-            },
-            address: {
-                line1: "UN Line 1",
-                line2: "UN Line 2",
-                city: "UN City",
-                state: "UN State",
-                code: "UN Code",
-                country: "UN Country"
-            },
-            email: "ubahariya.natarajan@email.com",
-            phone: "99999 22222"
-
-        },
-        {
-            id: 3,
-            name: {
-                first: "Satish",
-                last: "Kumar"
-            },
-            address: {
-                line1: "SK Line 1",
-                line2: "SK Line 2",
-                city: "SK City",
-                state: "SK State",
-                code: "SK Code",
-                country: "SK Country"
-            },
-            email: "satish.kumar@email.com",
-            phone: "99999 33333"
-        }
-    ];
-
-});
-angular.module('ba').controller('SecondCtrl', function ($scope) {
-    this.value = "Second";
 });
 angular.module('ba').directive('baFirst', function () {
     return {
@@ -112,14 +80,40 @@ angular.module('ba').filter('baSecond', function () {
     // Filter code will go here
 });
 'use strict';
-angular.module('ba').factory('ContactSvc', function ($http) {
+angular.module('ba').factory('ContactSvc', function ($http, ResourceSvc) {
+    var path = '/api/contact';
+
     return {
         getAll: function() {
-            return $http.get('/api/contact');
+            return $http.get(path);
+        },
+
+        get: function(id) {
+            var itemPath = ResourceSvc.itemPath(path, id);
+            return $http.get(itemPath);
+        },
+
+        save: function(contact) {
+            if(contact.id) {
+                var itemPath = ResourceSvc.itemPath(path, id);
+                return $http.put(itemPath, contact);
+            } else {
+                return $http.post(path, contact);
+            }
+        },
+        delete: function(id) {
+            var itemPath = ResourceSvc.itemPath(path, id);
+            return $http.delete(itemPath);
         }
+
+
     }
 });
 'use strict';
-angular.module('ba').service('SecondSvc', function () {
-    // Service code will go here
+angular.module('ba').service('ResourceSvc', function () {
+    return {
+        itemPath: function(basePath, id) {
+            return basePath + '/' + id;
+        }
+    }
 });

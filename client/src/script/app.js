@@ -5,8 +5,9 @@ angular.module('ba')
     .config(function ($routeProvider, $locationProvider) {
 
         $routeProvider
-            .when('/contact',   { controller: 'ContactCtrl as contactCtrl', templateUrl: '/view/contact-list.tpl.html' })
-            .when('/second',    { controller: 'SecondCtrl as ctrl', templateUrl: '/view/second.tpl.html'})
+            .when('/contact',           { controller: 'ContactListCtrl as ctrl', templateUrl: '/view/contact-list.tpl.html' })
+            .when('/contact/:id',       { controller: 'ContactDetailCtrl as ctrl', templateUrl: '/view/contact-detail.tpl.html'})
+
             .when('/',          { redirectTo: '/contact' })
             .otherwise(         { redirectTo: '/contact' })
     });
